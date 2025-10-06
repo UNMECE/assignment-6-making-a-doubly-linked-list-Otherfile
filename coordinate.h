@@ -1,3 +1,6 @@
+#ifndef COORDINATE_H
+#define COORDINATE_H
+
 struct _coordinate
 {
   float x;
@@ -7,3 +10,5 @@ struct _coordinate
   struct _coordinate *previous;
 };
 typedef struct _coordinate Coordinate;
+
+#endif

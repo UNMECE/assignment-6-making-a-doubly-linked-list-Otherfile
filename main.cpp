@@ -1,10 +1,11 @@
 #include<iostream>
 #include<ctime>
-
+#include<cmath>
+#include"coordinate.h"
 void add_coordinate(Coordinate *list_end, float x, float y, int coord_id){
 
 
-	Coordinate *new_coord = (Coordinate*)malloc(sizeof(Coordinate);
+	Coordinate *new_coord = (Coordinate*)malloc(sizeof(Coordinate));
 
 	new_coord->x = x;
 	new_coord->y = y;
@@ -68,14 +69,14 @@ void delete_coordinate(Coordinate *list_beginning, int coord_id_to_delete){
 			if(temp->previous != NULL){
 
 
-				temp->previous->next = temp->next
+				temp->previous->next = temp->next;
 
 			}
 
 			if(temp->next != NULL){
 
 
-				temp->next->previous = temp->previous
+				temp->next->previous = temp->previous;
 
 			}
 
@@ -115,8 +116,8 @@ void closest_to(Coordinate *list_beginning, float x, float y){
 
 	int coord_id;
 	double dist;
-	double min_dist
-	min_dist= sqrt(pow(min_coord->x - x, 2) + pow(min_coord->y - y, 2))
+	double min_dist;
+	min_dist = sqrt(pow(min_coord->x - x, 2) + pow(min_coord->y - y, 2));
 	while(cur_coord != NULL){
 		
 		dist = sqrt(pow(cur_coord->x - x, 2) + pow(cur_coord->y - y, 2));
@@ -155,22 +156,22 @@ int main(int argc, char* argv[]){
 		float y = (float)(rand()%100);
 		add_coordinate(list_end, x, y, i);
 
-		list_end = list->end;
+		list_end = list_end->next;
 
 	}
 
-	forward_display(Coordinate *list_beginning);
-	backwards_display(Coordinate *list_end);
+	forward_display(list_beginning);
+	backward_display(list_end);
 	
-	int length = length_list(list_beginning);
+	int length = list_length(list_beginning);
 	
 	float x = 10, y = 20;
 	closest_to(list_beginning, x, y);
 
 	delete_coordinate(list_beginning, to_delete);
 	
-	forward_display(Coordinate *list_beginning);
-	backwards_display(Coordinate *list_end);
+	forward_display(list_beginning);
+	backward_display(list_end);
 	
 	delete list_end;
 	delete list_beginning;
