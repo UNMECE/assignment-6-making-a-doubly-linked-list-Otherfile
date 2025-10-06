@@ -16,7 +16,7 @@ void add_coordinate(Coordinate *list_end, float x, float y, int coord_id){
 
 	list_end->next = new_coord;
 
-	delete new_coord;
+	
 }
 
 void forward_display(Coordinate *list_beginning){
@@ -28,6 +28,7 @@ void forward_display(Coordinate *list_beginning){
 	while(temp != NULL){
 
 
+		std::cout << "Linked List " << temp->coord_id << std::endl;
 		std::cout << "Coordinate ID " << temp->coord_id << std::endl;
 		std::cout << "X Coordinate " << temp->x << std::endl;
 		std::cout << "Y Coordinate " << temp->y << std::endl;
@@ -47,6 +48,7 @@ void backward_display(Coordinate *list_end){
 
 	while(temp!= NULL){
 
+		std::cout << "Linked List " << temp->coord_id << std::endl;
 		std::cout << "Coordinate ID " << temp->coord_id << std::endl;
 		std::cout << "X Coordinate " << temp->x << std::endl;
 		std::cout << "Y Coordinate " << temp->y << std::endl;
@@ -61,36 +63,29 @@ void delete_coordinate(Coordinate *list_beginning, int coord_id_to_delete){
 
 
 	Coordinate* temp = list_beginning;
+
 	while(temp != NULL){
-
+		
 		if(temp->coord_id == coord_id_to_delete){
-
-
 			if(temp->previous != NULL){
-
-
 				temp->previous->next = temp->next;
-
 			}
 
 			if(temp->next != NULL){
-
-
 				temp->next->previous = temp->previous;
-
+			
 			}
 
-	
 		delete temp;
 		std::cout << "Coordinate " << coord_id_to_delete << " Deleted Successfully!" << std::endl;
+		return;
+
+		} 
 		
-		} else {
-
-			std::cout << "ID has not been found" << std::endl;
-
-		}
-	
+		temp = temp->next;
 	}
+
+	std::cout << "Coordinate ID was not found" << std::endl;
 
 }
 int list_length(Coordinate *list_beginning){
@@ -101,7 +96,7 @@ int list_length(Coordinate *list_beginning){
 	while(temp != NULL){
 
 		length++;
-
+		temp = temp->next;
 	}
 	
 
@@ -114,9 +109,9 @@ void closest_to(Coordinate *list_beginning, float x, float y){
 	Coordinate* cur_coord = list_beginning;
 	Coordinate* min_coord = list_beginning;
 
-	int coord_id;
 	double dist;
 	double min_dist;
+
 	min_dist = sqrt(pow(min_coord->x - x, 2) + pow(min_coord->y - y, 2));
 	while(cur_coord != NULL){
 		
@@ -125,16 +120,13 @@ void closest_to(Coordinate *list_beginning, float x, float y){
 
 			min_dist = dist;
 			min_coord = cur_coord;
-			coord_id = cur_coord->coord_id;
 		}
 
 		cur_coord = cur_coord->next;
 
 	}
-
-	std::cout << "Closest Coordinate to " << x << " & " << y << " is " << coord_id << std::endl;
-	delete min_coord;
-	delete cur_coord;
+	
+	std::cout << "Closest Coordinate to " << x << " & " << y << " is " << min_coord->coord_id << std::endl;
 }
 
 int main(int argc, char* argv[]){
@@ -146,8 +138,10 @@ int main(int argc, char* argv[]){
 	
 	list_beginning->next = NULL;
 	list_beginning->previous = NULL;
-	list_beginning->coord_id = 0;
 
+	list_beginning->x = (float)(rand()%100);
+	list_beginning->y = (float)(rand()%100);
+	list_beginning->coord_id = 0;
 	Coordinate* list_end = list_beginning;
 	
 
@@ -155,10 +149,12 @@ int main(int argc, char* argv[]){
 		float x = (float)(rand()%100);
 		float y = (float)(rand()%100);
 		add_coordinate(list_end, x, y, i);
-
+		
 		list_end = list_end->next;
 
 	}
+
+	list_end->coord_id = size;
 
 	forward_display(list_beginning);
 	backward_display(list_end);
@@ -174,5 +170,5 @@ int main(int argc, char* argv[]){
 	backward_display(list_end);
 	
 	delete list_end;
-	delete list_beginning;
+  delete list_beginning;
 }
